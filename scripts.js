@@ -35,3 +35,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+// Contador simple (usando localStorage)
+function updateCounter() {
+    // Si ya existe un contador, lo lee; si no, empieza en 0.
+    let count = localStorage.getItem('paginaVisitas') || 0;
+    
+    // Incrementa el contador +1
+    count++;
+    
+    // Guarda el nuevo valor
+    localStorage.setItem('paginaVisitas', count);
+    
+    // Muestra el número en la página
+    document.getElementById('visitas').textContent = count;
+}
+
+// Ejecuta la función cuando la página cargue
+updateCounter();
