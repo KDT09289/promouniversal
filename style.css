@@ -1,0 +1,157 @@
+/* Estilos generales */
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #ffffff;
+    background-color: #2a2a2a;
+    margin: 0;
+    padding: 0;
+}
+
+/* Menú flotante */
+.floating-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(40, 40, 40, 0.9);
+    z-index: 1000;
+    padding: 10px 0;
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.menu-items {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-items li {
+    margin: 0 15px;
+}
+
+.menu-items a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+.menu-items a:hover {
+    color: #cccccc;
+}
+
+/* Banner */
+.banner {
+    background-image: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+    background-size: cover;
+    background-position: center;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.banner-content {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.banner h1 {
+    font-size: 48px;
+    margin: 0;
+    color: #ffffff;
+}
+
+.banner h2 {
+    font-size: 24px;
+    margin: 10px 0 0;
+    color: #dddddd;
+}
+
+/* Secciones de contenido */
+.content-section {
+    padding: 60px 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.content-section h2 {
+    font-size: 32px;
+    color: #ffffff;
+    border-bottom: 2px solid #555555;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+
+.text-content {
+    font-size: 18px;
+    color: #eeeeee;
+    line-height: 1.8;
+}
+
+.preserve-formatting {
+    white-space: pre-wrap; /* Mantiene formatos básicos al pegar desde Word */
+}
+
+/* Enlaces */
+a {
+    color: #4da6ff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+    
+    .menu-items {
+        display: none;
+        flex-direction: column;
+        background-color: rgba(40, 40, 40, 0.95);
+    }
+    
+    .menu-items.show {
+        display: flex;
+    }
+    
+    .menu-items li {
+        margin: 10px 0;
+    }
+    
+    .banner {
+        height: 300px;
+        margin-top: 0;
+    }
+    
+    .banner h1 {
+        font-size: 36px;
+    }
+    
+    .banner h2 {
+        font-size: 18px;
+    }
+    
+    .content-section {
+        padding: 40px 15px;
+    }
+}
