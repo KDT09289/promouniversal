@@ -173,13 +173,18 @@ footer {
     justify-content: center;
 }
 
-.scroll-btn:hover {
-    background: rgba(77, 166, 255, 1);
+/* Botones de desplazamiento más grandes y visibles */
+.scroll-btn {
+    background: rgba(77, 166, 255, 0.9);
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    margin: 0 5px;
 }
 
-/* Ajuste para el contenedor del menú */
+/* Aumenta la altura máxima del menú y ajusta el scroll */
 .menu-container {
-    max-height: 70vh;
+    max-height: 70vh; /* Altura del 70% de la pantalla */
     overflow-y: auto;
     scroll-behavior: smooth;
 }
