@@ -1,75 +1,108 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Menú desplegable
+    // =============================================
+    // Configuración del Menú Desplegable
+    // =============================================
     const menuToggle = document.querySelector('.menu-toggle');
     const menuItems = document.querySelector('.menu-items');
-    
-    menuToggle.addEventListener('click', function() {
+    const menuContainer = document.querySelector('.menu-container');
+    const scrollUpBtn = document.getElementById('scroll-up');
+    const scrollDownBtn = document.getElementById('scroll-down');
+
+    // Variables de desplazamiento
+    const scrollStep = 200; // Pixeles a desplazar por clic (ajustable)
+    let isMenuOpen = false;
+
+    // =============================================
+    // Funciones principales
+    // =============================================
+
+    // Alternar menú (abrir/cerrar)
+    function toggleMenu() {
+        isMenuOpen = !isMenuOpen;
         menuItems.classList.toggle('show');
+        menuToggle.textContent = isMenuOpen ? '×' : '☰';
         
-        // Cambia el ícono a "X" cuando está abierto
-        if (menuItems.classList.contains('show')) {
-            menuToggle.textContent = '×';
+        // Mostrar/ocultar botones solo si el menú está abierto
+        if (isMenuOpen) {
+            checkScrollButtons();
         } else {
-            menuToggle.textContent = '☰';
+            scrollUpBtn.style.visibility = 'hidden';
+            scrollDownBtn.style.visibility = 'hidden';
         }
+    }
+
+    // Verificar estado de los botones de scroll
+    function checkScrollButtons() {
+        const hasScroll = menuContainer.scrollHeight > menuContainer.clientHeight;
+        const atTop = menuContainer.scrollTop === 0;
+        const atBottom = 
+            Math.ceil(menuContainer.scrollTop + menuContainer.clientHeight) >= 
+            menuContainer.scrollHeight;
+
+        scrollUpBtn.style.visibility = hasScroll && !atTop ? 'visible' : 'hidden';
+        scrollDownBtn.style.visibility = hasScroll && !atBottom ? 'visible' : 'hidden';
+    }
+
+    // =============================================
+    // Event Listeners
+    // =============================================
+
+    // Botón de menú hamburguesa
+    menuToggle.addEventListener('click', toggleMenu);
+
+    // Botones de desplazamiento
+    scrollUpBtn.addEventListener('click', () => {
+        menuContainer.scrollBy({ top: -scrollStep, behavior: 'smooth' });
     });
-    
-    // Cierra el menú al hacer clic en un enlace
+
+    scrollDownBtn.addEventListener('click', () => {
+        menuContainer.scrollBy({ top: scrollStep, behavior: 'smooth' });
+    });
+
+    // Cerrar menú al hacer clic en un enlace
     document.querySelectorAll('.menu-items a').forEach(link => {
         link.addEventListener('click', function() {
-            menuItems.classList.remove('show');
-            menuToggle.textContent = '☰';
+            if (isMenuOpen) toggleMenu();
         });
     });
-    
-    // Smooth scrolling para enlaces del menú
+
+    // Detectar scroll en el menú
+    menuContainer.addEventListener('scroll', checkScrollButtons);
+
+    // Smooth scrolling para enlaces internos
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-            
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop - 60,
-                    behavior: 'smooth'
-                });
+            if (this.getAttribute('href') !== '#') {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 60,
+                        behavior: 'smooth'
+                    });
+                }
             }
         });
     });
-    
-    // Contador simple de visitas (local)
+
+    // Contador de visitas
     function updateCounter() {
         let count = localStorage.getItem('visitasLiberate') || 0;
         count++;
         localStorage.setItem('visitasLiberate', count);
-        document.getElementById('visitas').textContent = count;
+        const visitasElement = document.getElementById('visitas');
+        if (visitasElement) visitasElement.textContent = count;
     }
     updateCounter();
-});
-// Botones de desplazamiento del menú
-const scrollUpBtn = document.getElementById('scroll-up');
-const scrollDownBtn = document.getElementById('scroll-down');
-const menuContainer = document.querySelector('.menu-container');
 
-scrollUpBtn.addEventListener('click', () => {
-    menuContainer.scrollBy({ top: -100, behavior: 'smooth' });
-});
-
-scrollDownBtn.addEventListener('click', () => {
-    menuContainer.scrollBy({ top: 100, behavior: 'smooth' });
-});
-
-// Mostrar/ocultar botones según scroll
-menuContainer.addEventListener('scroll', () => {
-    scrollUpBtn.style.display = menuContainer.scrollTop === 0 ? 'none' : 'flex';
-    scrollDownBtn.style.display = menuContainer.scrollTop + menuContainer.clientHeight >= menuContainer.scrollHeight - 1 ? 'none' : 'flex';
-});
-
-// Ocultar botones al cargar si no hay overflow
-window.addEventListener('load', () => {
-    if (menuContainer.scrollHeight <= menuContainer.clientHeight) {
-        document.querySelector('.menu-scroll-buttons').style.display = 'none';
-    }
+    // Inicialización al cargar
+    window.addEventListener('load', function() {
+        // Ocultar botones si no hay overflow
+        if (menuContainer.scrollHeight <= menuContainer.clientHeight) {
+            document.querySelector('.menu-scroll-buttons').style.display = 'none';
+        }
+        
+        // Forzar verificación inicial
+        checkScrollButtons();
+    });
 });
