@@ -1,54 +1,50 @@
-// Menú desplegable para móviles
 document.addEventListener('DOMContentLoaded', function() {
+    // Menú desplegable
     const menuToggle = document.querySelector('.menu-toggle');
     const menuItems = document.querySelector('.menu-items');
     
     menuToggle.addEventListener('click', function() {
         menuItems.classList.toggle('show');
+        
+        // Cambia el ícono a "X" cuando está abierto
+        if (menuItems.classList.contains('show')) {
+            menuToggle.textContent = '×';
+        } else {
+            menuToggle.textContent = '☰';
+        }
     });
     
-    // Cerrar menú al hacer clic en un enlace (para móviles)
-    const menuLinks = document.querySelectorAll('.menu-items a');
-    menuLinks.forEach(link => {
+    // Cierra el menú al hacer clic en un enlace
+    document.querySelectorAll('.menu-items a').forEach(link => {
         link.addEventListener('click', function() {
-            if (window.innerWidth <= 768) {
-                menuItems.classList.remove('show');
-            }
+            menuItems.classList.remove('show');
+            menuToggle.textContent = '☰';
         });
     });
     
-    // Smooth scrolling para los enlaces del menú
+    // Smooth scrolling para enlaces del menú
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
-            
             const targetId = this.getAttribute('href');
             if (targetId === '#') return;
             
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
                 window.scrollTo({
-                    top: targetElement.offsetTop - 70,
+                    top: targetElement.offsetTop - 60,
                     behavior: 'smooth'
                 });
             }
         });
     });
+    
+    // Contador simple de visitas (local)
+    function updateCounter() {
+        let count = localStorage.getItem('visitasLiberate') || 0;
+        count++;
+        localStorage.setItem('visitasLiberate', count);
+        document.getElementById('visitas').textContent = count;
+    }
+    updateCounter();
 });
-// Contador simple (usando localStorage)
-function updateCounter() {
-    // Si ya existe un contador, lo lee; si no, empieza en 0.
-    let count = localStorage.getItem('paginaVisitas') || 0;
-    
-    // Incrementa el contador +1
-    count++;
-    
-    // Guarda el nuevo valor
-    localStorage.setItem('paginaVisitas', count);
-    
-    // Muestra el número en la página
-    document.getElementById('visitas').textContent = count;
-}
-
-// Ejecuta la función cuando la página cargue
-updateCounter();
