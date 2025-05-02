@@ -48,3 +48,28 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     updateCounter();
 });
+// Botones de desplazamiento del menú
+const scrollUpBtn = document.getElementById('scroll-up');
+const scrollDownBtn = document.getElementById('scroll-down');
+const menuContainer = document.querySelector('.menu-container');
+
+scrollUpBtn.addEventListener('click', () => {
+    menuContainer.scrollBy({ top: -100, behavior: 'smooth' });
+});
+
+scrollDownBtn.addEventListener('click', () => {
+    menuContainer.scrollBy({ top: 100, behavior: 'smooth' });
+});
+
+// Mostrar/ocultar botones según scroll
+menuContainer.addEventListener('scroll', () => {
+    scrollUpBtn.style.display = menuContainer.scrollTop === 0 ? 'none' : 'flex';
+    scrollDownBtn.style.display = menuContainer.scrollTop + menuContainer.clientHeight >= menuContainer.scrollHeight - 1 ? 'none' : 'flex';
+});
+
+// Ocultar botones al cargar si no hay overflow
+window.addEventListener('load', () => {
+    if (menuContainer.scrollHeight <= menuContainer.clientHeight) {
+        document.querySelector('.menu-scroll-buttons').style.display = 'none';
+    }
+});
