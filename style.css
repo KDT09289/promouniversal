@@ -150,3 +150,36 @@ footer {
         padding: 40px 15px;
     }
 }
+/* Botones de desplazamiento del menú */
+.menu-scroll-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    background-color: rgba(30, 30, 30, 0.98);
+}
+
+.scroll-btn {
+    background: rgba(77, 166, 255, 0.7);
+    border: none;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.scroll-btn:hover {
+    background: rgba(77, 166, 255, 1);
+}
+
+/* Ajuste para el contenedor del menú */
+.menu-container {
+    max-height: 70vh;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
